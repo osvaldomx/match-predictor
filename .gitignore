@@ -205,3 +205,12 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Carpetas de MLOps (manejadas por DVC y MLflow server)
+/data/raw/
+/data/processed/
+/models/
+mlruns/
+
+# Archivos de sistema
+.DS_Store
