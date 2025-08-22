@@ -1,0 +1,29 @@
+stages:
+  scrape_data:
+    cmd: python src/data/scrape.py --output data/raw/liga_mx_raw.csv
+    deps:
+      - src/data/scrape.py
+    outs:
+      - data/raw/liga_mx_raw.csv
+
+  process_data:
+    cmd: python src/data/process.py --input data/raw/liga_mx_raw.csv --output data/processed/liga_mx_processed.csv
+    deps:
+      - src/data/process.py
+      - data/raw/liga_mx_raw.csv
+    outs:
+      - data/processed/liga_mx_processed.csv
+
+  train_model:
+    cmd: python src/models/train.py --input data/processed/liga_mx_processed.csv --output models/predictor_model.joblib
+    deps:
+      - src/models/train.py
+      - data/processed/liga_mx_processed.csv
+    params:
+      - training.n_estimators
+      - training.learning_rate
+    outs:
+      - models/predictor_model.joblib
+    metrics:
+      - metrics.json:
+          cache: false

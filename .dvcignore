@@ -1,0 +1,16 @@
+# Cache local de DVC. Es crucial ignorarlo.
+/cache
+
+# Archivos de bloqueo de DVC si no se comparten entre colaboradores
+*.lock
+
+# Archivos de metadatos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Puntos de control de Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Archivos temporales o de registro que puedan generarse
+*.tmp
+*.log

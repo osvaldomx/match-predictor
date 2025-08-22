@@ -1,0 +1,14 @@
+schema: '2.0'
+stages:
+  scrape_data:
+    cmd: python src/data/scrape.py --output data/raw/liga_mx_raw.csv
+    deps:
+    - path: src/data/scrape.py
+      hash: md5
+      md5: e11832e4cfb8179cb3cbf3bcf939537b
+      size: 5787
+    outs:
+    - path: data/raw/liga_mx_raw.csv
+      hash: md5
+      md5: 8982c0a54f0f77a4dc899a81d41d8fee
+      size: 336590
