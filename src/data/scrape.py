@@ -59,11 +59,12 @@ def scrape_season_data(season: str) -> pd.DataFrame:
     match_data = []
     for row in rows:
         # Saltamos las filas que son cabeceras intermedias en la tabla
-        if row.find('th', {'class': 'thead'}):
+        if row.find_all(['th', 'tr'], {'class': 'thead'}):
             continue
 
         cells = row.find_all(['th', 'td'])
-        if len(cells) < 10: # Si la fila no tiene suficientes celdas, la ignoramos
+        # Si la fila no tiene suficientes celdas, la ignoramos
+        if len(cells) < 10 or cells[1].text.strip() == 'Wk':
             continue
 
         # Saltamos filas intermedias vacias
@@ -102,6 +103,10 @@ def scrape_season_data(season: str) -> pd.DataFrame:
                 week = "Final Ida"
             else:
                 week = "Final Vuelta"
+
+        # Checa el marcador por si hay penales, por el momento se eliminan
+        ptr = r'\d+–\d+'
+        fix_score = re.search(ptr, cells[7].text.strip())
             
         match_info = {
             'week': cells[1].text.strip() or week,
@@ -110,7 +115,7 @@ def scrape_season_data(season: str) -> pd.DataFrame:
             'time': cells[4].text.strip(),
             'home_team': cells[5].text.strip(),
             'xgh': cells[6].text.strip(),
-            'score': cells[7].text.strip(),
+            'score': fix_score.group() if fix_score else cells[7].text.strip(),
             'xga': cells[8].text.strip(),
             'away_team': cells[9].text.strip(),
             'attendance': cells[10].text.strip(),

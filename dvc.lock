@@ -5,10 +5,27 @@ stages:
     deps:
     - path: src/data/scrape.py
       hash: md5
-      md5: e11832e4cfb8179cb3cbf3bcf939537b
-      size: 5787
+      md5: 970f341472b5ad39402fa533823a24ea
+      size: 6157
     outs:
     - path: data/raw/liga_mx_raw.csv
       hash: md5
-      md5: 8982c0a54f0f77a4dc899a81d41d8fee
-      size: 336590
+      md5: 55629a4dfc5f7744c612b6789f1e6b76
+      size: 336212
+  process_data:
+    cmd: python src/data/process.py --input data/raw/liga_mx_raw.csv --output 
+      data/processed/liga_mx_processed.csv
+    deps:
+    - path: data/raw/liga_mx_raw.csv
+      hash: md5
+      md5: 55629a4dfc5f7744c612b6789f1e6b76
+      size: 336212
+    - path: src/data/process.py
+      hash: md5
+      md5: d8367f9d9e7aa4e8bf5cdf1f6addffce
+      size: 5349
+    outs:
+    - path: data/processed/liga_mx_processed.csv
+      hash: md5
+      md5: a612dc9eed5d5dd474516693c16b76e0
+      size: 278386
